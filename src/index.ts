@@ -1,1 +1,14 @@
-console.log("hello there");
+import { MikroORM } from "@mikro-orm/core";
+
+const main = async () => {
+    const orm = await MikroORM.init({
+        dbName: 'lireddit',
+        type: 'postgresql',
+        debug: process.env.NODE_ENV
+    });
+
+    console.log("hello there");
+}
+
+main();
+
