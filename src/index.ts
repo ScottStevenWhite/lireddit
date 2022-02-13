@@ -1,14 +1,18 @@
-import { MikroORM } from "@mikro-orm/core";
+import { compareBuffers, MikroORM } from "@mikro-orm/core";
+import { __prod__ } from "./constants";
+import { Post } from "./entities/Post";
 
 const main = async () => {
     const orm = await MikroORM.init({
+        entities: [Post],
         dbName: 'lireddit',
         type: 'postgresql',
-        debug: process.env.NODE_ENV
+        debug: !__prod__
     });
 
-    console.log("hello there");
-}
+    const post = orm.em.create(Post, {title: 'my first post'});
+    await orm.em.persistAndFlush(post);
+    await orm.em.nativeInsert(Post, {title: 'my first post 2'};)
 
 main();
 
